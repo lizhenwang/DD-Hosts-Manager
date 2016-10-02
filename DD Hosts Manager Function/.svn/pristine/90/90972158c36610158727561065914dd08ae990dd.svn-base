@@ -1,0 +1,163 @@
+﻿' DD hosts functions
+' Powered by lizhenwang
+Public Class dd_functions
+    Dim HostsPath As String = Environment.GetFolderPath(Environment.SpecialFolder.Windows) & "\System32\drivers\etc\hosts"
+
+    Dim ext_Name As String            '扩展名
+    Dim ext_Author As String          '扩展作者
+    Dim ext_link As String            '支持链接
+    Dim ext_Version As String         '扩展版本
+    Dim ext_UpdateUrl As String       '扩展更新地址
+    Dim ext_Isipv6 As Boolean         '是否支持ipv6
+
+    Dim ext_hostsPath_v4 As String    'hosts文件更新地址(ipv4)
+    Dim ext_hostsPath_v6 As String    'hosts文件更新地址(ipv6)
+
+    Dim app_UpgradeUrl As String      'DD hosts更新地址
+
+#Region "获取[扩展]属性"
+    Public Function LoadExtension(extPath As String) As Boolean
+
+    End Function
+
+#End Region
+
+#Region "备份系统hosts文件，输入保存文件的路径Public Function Backup(ByVal SavePath As String) As Boolean"
+    Public Function Backup(ByVal SavePath As String) As Boolean
+        If My.Computer.FileSystem.FileExists(HostsPath) = True Then
+            My.Computer.FileSystem.CopyFile(HostsPath, SavePath, True)
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
+#End Region
+
+#Region "还原备份的hosts文件，输入需要还原的文件路径Public Function Restore(ByVal Source As String) As Boolean"
+    Public Function Restore(ByVal Source As String) As Boolean
+        Try
+            My.Computer.FileSystem.CopyFile(Source, HostsPath, True)
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+#End Region
+
+#Region "执行flushdns刷新DNS缓存，无需输入参数"
+    Public Function flushdns() As String
+        Dim f As New System.Diagnostics.Process
+        With f
+            .StartInfo.FileName = "ipconfig"
+            .StartInfo.WindowStyle = ProcessWindowStyle.Hidden
+            .StartInfo.Arguments = "/flushdns"
+            .Start()
+        End With
+    End Function
+
+#End Region
+
+#Region "获取本地hosts文件的版本"
+    Public Function GetLocalVer() As String
+        If My.Computer.FileSystem.FileExists(HostsPath) Then
+
+        Else
+            Return "Err001"
+        End If
+    End Function
+
+#End Region
+
+#Region "获取远程hosts文件的版本"
+    Public Function GetRemoteVer() As String
+
+    End Function
+
+#End Region
+
+#Region "下载hosts文件，注意返回下载结果"
+    Public Function DownloadHosts() As Boolean
+
+    End Function
+
+#End Region
+
+#Region "获取DD hosts软件属性,PropPath为保存属性的文件，wProp为属性的项目"
+    Public Function GetProperties(ByVal PropPath As String, ByVal wProp As String) As String
+
+    End Function
+
+#End Region
+
+#Region "获取DD hosts软件设置,SettingsPath为保存软件设置的文件，wSettings为属性的项目"
+    Public Function GetSettings(ByVal SettingsPath As String, ByVal wSettings As String) As String
+
+    End Function
+
+#End Region
+
+#Region "设置或清除开机启动，输入1或0以及可执行程序所在路径"
+    Public Function AutoStart(IsAuto As Boolean, ExePath As String) As Boolean
+        On Error Resume Next
+        Dim reg
+        If IsAuto = True Then
+            If Environment.Is64BitOperatingSystem = True Then
+                reg = My.Computer.Registry.LocalMachine.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run", True)
+            Else
+                reg = My.Computer.Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True)
+            End If
+            reg.SetValue("DD hosts", ExePath & " -tray")
+        Else
+            If Environment.Is64BitOperatingSystem = True Then
+                reg = My.Computer.Registry.LocalMachine.OpenSubKey("SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run", True)
+            Else
+                reg = My.Computer.Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows\CurrentVersion\Run", True)
+            End If
+            reg.DeleteValue("DD hosts")
+        End If
+        reg.Close()
+    End Function
+
+#End Region
+
+#Region "应用自定义的hosts内容，输入自定义的内容，若不存在或清除自定义，则无需输入参数"
+    Public Function Customize(Optional ByVal TXT As String = "") As String
+        Dim AllTXT As String
+        Dim NewTXT As String = ""
+        If My.Computer.FileSystem.FileExists(HostsPath) = True Then
+            AllTXT = FileIO.FileSystem.ReadAllText(HostsPath)
+            If My.Computer.FileSystem.FileExists(HostsPath) Then My.Computer.FileSystem.DeleteFile(HostsPath)
+            Dim RewriteTXT As New System.IO.FileStream(HostsPath, IO.FileMode.Create)
+            If InStr(AllTXT, "# Customize Hosts Start") = 0 Then
+                If Not TXT = "" Then
+                    NewTXT = AllTXT & vbCrLf & "# Customize Hosts Start" & vbCrLf & TXT & vbCrLf & "# Customize Hosts End"
+                Else
+                    NewTXT = AllTXT
+                End If
+            Else
+                If TXT = "" Then
+                    NewTXT = AllTXT.Replace(Mid(AllTXT, InStr(AllTXT, "# Customize Hosts Start") - 2, InStr(AllTXT, "# Customize Hosts End") - InStr(AllTXT, "# Customize Hosts Start") + "# Customize Hosts End".Length + 2), "")
+                Else
+                    NewTXT = AllTXT.Replace(Mid(AllTXT, InStr(AllTXT, "# Customize Hosts Start") - 2, InStr(AllTXT, "# Customize Hosts End") - InStr(AllTXT, "# Customize Hosts Start") + "# Customize Hosts End".Length + 2), vbCrLf & "# Customize Hosts Start" & vbCrLf & TXT & vbCrLf & "# Customize Hosts End")
+                End If
+
+            End If
+
+            RewriteTXT.Write(System.Text.Encoding.ASCII.GetBytes(NewTXT), 0, System.Text.Encoding.ASCII.GetBytes(NewTXT).Length)
+            RewriteTXT.Close()
+        Else
+            If Not TXT = "" Then
+                Dim CreateFile As New System.IO.FileStream(HostsPath, IO.FileMode.Create, IO.FileAccess.Write)
+                Dim HostsTXT() As Byte
+                HostsTXT = System.Text.Encoding.ASCII.GetBytes("# Created by DD hosts" & vbCrLf & "# Customize Hosts Start" & vbCrLf & TXT & vbCrLf & "# Customize Hosts End")
+                CreateFile.Write(HostsTXT, 0, HostsTXT.Length)
+                CreateFile.Close()
+            End If
+
+        End If
+    End Function
+
+#End Region
+End Class

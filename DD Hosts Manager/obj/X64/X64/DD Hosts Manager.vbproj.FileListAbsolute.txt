@@ -1,0 +1,7 @@
+d:\documents\visual studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\bin\x64\X64\DD Hosts Manager.exe.config
+d:\documents\visual studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\bin\x64\X64\DD Hosts Manager.exe
+d:\documents\visual studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\obj\x64\X64\DD_Hosts_Manager.LOGO.resources
+d:\documents\visual studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\obj\x64\X64\DD_Hosts_Manager.MainWindow.resources
+d:\documents\visual studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\obj\x64\X64\DD_Hosts_Manager.Resources.resources
+d:\documents\visual studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\obj\x64\X64\DD Hosts Manager.vbproj.GenerateResource.Cache
+d:\documents\visual studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\obj\x64\X64\DD Hosts Manager.exe

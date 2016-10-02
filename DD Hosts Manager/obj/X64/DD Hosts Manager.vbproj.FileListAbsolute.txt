@@ -1,0 +1,1 @@
+d:\documents\visual studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\bin\X64\DD Hosts Manager.exe.config

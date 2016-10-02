@@ -1,0 +1,9 @@
+D:\Documents\Visual Studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\bin\Debug\DD Hosts Manager Functions.dll
+D:\Documents\Visual Studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\bin\Debug\DD Hosts Manager Functions.pdb
+D:\Documents\Visual Studio 2015\Projects\DD Hosts Manager\DD Hosts Manager\bin\Debug\DD Hosts Manager Functions.xml
+D:\DD hosts\functions\functions\obj\Debug\DDhosts.Resources.resources
+D:\DD hosts\functions\functions\obj\Debug\DD Hosts Manager Functions.vbproj.GenerateResource.Cache
+D:\DD hosts\functions\functions\obj\Debug\DD Hosts Manager Functions.dll
+D:\DD hosts\functions\functions\obj\Debug\DD Hosts Manager Functions.xml
+D:\DD hosts\functions\functions\obj\Debug\DD Hosts Manager Functions.pdb
+D:\DD hosts\functions\functions\obj\Debug\DD Hosts Manager Functions.vbprojResolveAssemblyReference.cache
