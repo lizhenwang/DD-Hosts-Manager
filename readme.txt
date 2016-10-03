@@ -1,2 +1,2 @@
-点点hosts文件管理器
+sync remote hosts file at any time.
 http://www.lizhenwang.com
